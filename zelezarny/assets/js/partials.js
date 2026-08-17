@@ -33,10 +33,6 @@ export function renderFooter() {
         <div class="brand footer-brand"><span class="brand-mark"></span><span>ŽELEZÁRNY</span></div>
         <p>Digitální prezentace modulového kolejiště Železáren.</p>
       </div>
-      <div class="footer-nav">
-        <a href="projekt.html">Projekt</a>
-        <a href="lokomotivy.html">Lokomotivy</a>
-      </div>
       <p class="copyright">© <span data-current-year></span> N kolejiště. Všechna práva vyhrazena.</p>
     </div>
   `;
