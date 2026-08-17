@@ -1,10 +1,8 @@
 const NAV_ITEMS = [
   { href: "index.html", label: "Úvod", page: "home" },
-  { href: "areal.html", label: "Areál", page: "areal" },
+  { href: "projekt.html", label: "Projekt", page: "project" },
   { href: "stavba.html", label: "Stavba", page: "stavba" },
-  { href: "provoz.html", label: "Provoz", page: "provoz" },
   { href: "lokomotivy.html", label: "Lokomotivy", page: "locomotives" },
-  { href: "vozy.html", label: "Vozy", page: "vozy" },
 ];
 
 export function renderHeader(activePage) {
@@ -22,7 +20,7 @@ export function renderHeader(activePage) {
       <span></span><span></span>
     </button>
 
-    <nav class="main-nav" id="mainNav" aria-label="Hlavní navigace Železáren">
+    <nav class="main-nav" id="mainNav" aria-label="Hlavní navigace">
         ${navLinks}
     </nav>
   `;
@@ -36,8 +34,7 @@ export function renderFooter() {
         <p>Digitální prezentace modulového kolejiště Železáren.</p>
       </div>
       <div class="footer-nav">
-        <a href="areal.html">Areál</a>
-        <a href="provoz.html">Provoz</a>
+        <a href="projekt.html">Projekt</a>
         <a href="lokomotivy.html">Lokomotivy</a>
       </div>
       <p class="copyright">© <span data-current-year></span> N kolejiště. Všechna práva vyhrazena.</p>
