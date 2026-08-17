@@ -3,70 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Vozy modulového kolejiště Železárny v měřítku N 1:160.">
+  <meta name="description" content="Železniční vozy modulového kolejiště Železárny.">
   <meta name="theme-color" content="#090b0d">
   <title>Vozy | Železárny</title>
-
-  <link rel="icon" href="../assets/images/common/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../assets/css/style.css">
-  <script type="module" src="../assets/js/main.js"></script>
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script type="module" src="assets/js/main.js"></script>
 </head>
-<body data-page="zelezarny-vozy" data-section="zelezarny" data-root="../">
+<body data-page="vozy">
   <header class="site-header" id="siteHeader"></header>
 
   <main>
     <section class="page-hero">
       <div class="container page-hero-grid">
-        <div>
-          <p class="eyebrow reveal">ŽELEZÁRNY / VOZOVÝ PARK</p>
-          <h1 class="page-title reveal">Vozy.</h1>
-        </div>
-        <p class="page-intro reveal">Nákladní vozy pro zásobování hutních provozů i expedici hotových výrobků.</p>
+        <div><p class="eyebrow reveal">VOZOVÝ PARK</p><h1 class="page-title reveal">Vozy</h1></div>
+        <p class="page-intro reveal">Vozy pro suroviny, polotovary, hotové výrobky i vnitropodnikovou dopravu.</p>
       </div>
     </section>
 
-    <!-- EDITACE: vozy. Obrázky si ukládej do assets/images/zelezarny/vozy/ -->
     <section class="chapter-block container">
       <div class="chapter-grid">
         <div class="chapter-content reveal">
           <p class="eyebrow">SUROVINY</p>
-          <h2 class="section-title">Vozy do výroby.</h2>
-          <div class="story-copy">
-            <p>Prostor pro vozy se šrotem, rudou, uhlím, vápencem a dalšími materiály potřebnými pro provoz železáren.</p>
-          </div>
+          <h2 class="section-title">Příjezdové vozy</h2>
+          <div class="story-copy"><p>Sem později doplň skupiny vozů pro rudu, uhlí, šrot, vápenec nebo další vstupní materiály.</p></div>
         </div>
-        <div class="chapter-media reveal">
-          <img src="../assets/images/common/uvodni_foto.jpg" alt="Nákladní vozy se surovinami">
-        </div>
+        <div class="chapter-media reveal"><img src="assets/images/kolejiste/uvodni_foto.jpg" alt="Vozy se surovinami"></div>
       </div>
     </section>
 
     <section class="chapter-block container">
       <div class="chapter-grid">
         <div class="chapter-content reveal">
-          <p class="eyebrow">VÝROBKY</p>
-          <h2 class="section-title">Vozy z výroby.</h2>
-          <div class="story-copy">
-            <p>Zde mohou být vozy pro svitky, plechy, profily a další hutní výrobky včetně popisu jejich reálného i modelového využití.</p>
-          </div>
+          <p class="eyebrow">EXPEDICE</p>
+          <h2 class="section-title">Hotové výrobky</h2>
+          <div class="story-copy"><p>Sem později doplň vozy používané pro expedici svitků, profilů, plechů a dalších výrobků.</p></div>
         </div>
-        <div class="chapter-media reveal">
-          <img src="../assets/images/common/uvodni_foto.jpg" alt="Vozy s hutními výrobky">
-        </div>
+        <div class="chapter-media reveal"><img src="assets/images/kolejiste/uvodni_foto.jpg" alt="Expediční vozy"></div>
       </div>
     </section>
 
     <section class="next-page-panel">
       <div class="container next-page-grid">
-        <div>
-          <p class="eyebrow">ZPĚT NA ZAČÁTEK</p>
-          <h2 class="section-title">Železárny.</h2>
-        </div>
-        <a class="circle-link" href="./" aria-label="Zpět na úvod železáren">↗</a>
+        <div><p class="eyebrow">ZPĚT NA ZAČÁTEK</p><h2 class="section-title">Úvod.</h2></div>
+        <a class="circle-link" href="index.html" aria-label="Přejít na úvod Železáren">↗</a>
       </div>
     </section>
   </main>
 
+  <div class="lightbox-modal" id="lightboxModal">
+    <button class="lightbox-close">×</button>
+    <img id="lightboxImg" src="" alt="Detailní fotka">
+  </div>
   <footer class="site-footer" id="siteFooter"></footer>
 </body>
 </html>
