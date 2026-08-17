@@ -109,13 +109,14 @@ button { font: inherit; }
 .button-link:hover { border-color: var(--accent); }
 .hero-index { position: absolute; z-index: 2; right: 38px; bottom: 30px; font-size: 11px; letter-spacing: .18em; color: rgba(255,255,255,.45); }
 
-.portal-section { padding: 105px 0 145px; }
+.portal-section { padding: 18px 0 110px; }
 .portal-heading { display: grid; grid-template-columns: 1.05fr .95fr; gap: 80px; align-items: end; margin-bottom: 60px; }
 .section-title { font-size: clamp(46px, 6vw, 86px); }
 .portal-intro { max-width: 560px; margin: 0; color: var(--muted); font-size: 18px; }
 .portal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.portal-grid#arealy { scroll-margin-top: 18px; }
 .portal-card {
-  min-height: 510px;
+  min-height: 400px;
   position: relative;
   overflow: hidden;
   border: 1px solid var(--line);
@@ -253,7 +254,7 @@ section[id] { scroll-margin-top: 100px; }
   .menu-toggle.active span:last-child { transform: translateY(-4px) rotate(-45deg); }
   .portal-heading, .page-hero-grid, .story-grid { grid-template-columns: 1fr; gap: 48px; }
   .portal-grid { grid-template-columns: 1fr; }
-  .portal-card { min-height: 430px; }
+  .portal-card { min-height: 350px; }
   .content-cards { grid-template-columns: 1fr; }
 }
 
@@ -271,9 +272,9 @@ section[id] { scroll-margin-top: 100px; }
   .display-title { font-size: clamp(50px, 15vw, 76px); }
   .hero-lead { font-size: 16px; }
   .hero-index { display: none; }
-  .portal-section { padding: 76px 0 95px; }
-  .portal-card { min-height: 390px; padding: 26px; }
-  .portal-number { margin-bottom: 85px; }
+  .portal-section { padding: 14px 0 82px; }
+  .portal-card { min-height: 300px; padding: 26px; }
+  .portal-number { margin-bottom: 55px; }
   .page-hero { min-height: 70vh; padding: 140px 0 70px; }
   .page-title { font-size: 68px; }
   .page-intro { font-size: 17px; }
