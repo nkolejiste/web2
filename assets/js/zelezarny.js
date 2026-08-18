@@ -93,6 +93,36 @@ function initZelezarnyInteractions() {
     document.querySelectorAll(".reveal").forEach(element => element.classList.add("visible"));
   }
 
+  const statsSection = document.querySelector(".stats-section");
+  const statCircles = statsSection ? [...statsSection.querySelectorAll(".stat-circle")] : [];
+
+  if (statsSection && statCircles.length) {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      statCircles.forEach(circle => circle.classList.add("is-visible"));
+    } else {
+      statsSection.classList.add("stats-animate");
+
+      const statsObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            statCircles.forEach((circle, index) => {
+              window.setTimeout(() => circle.classList.add("is-visible"), index * 700);
+            });
+
+            statsObserver.unobserve(statsSection);
+          });
+        },
+        { threshold: 0.22, rootMargin: "0px 0px -8% 0px" }
+      );
+
+      statsObserver.observe(statsSection);
+    }
+  }
+
   // Lightbox fotografií – aktivuje se jen na stránkách, kde je jeho HTML.
   const lightboxModal = document.getElementById("lightboxModal");
   const lightboxImg = document.getElementById("lightboxImg");
