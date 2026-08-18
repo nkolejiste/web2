@@ -1,61 +1,78 @@
-const NAV_ITEMS = [
-  { href: "index.html", label: "Úvod", page: "home" },
-  { href: "projekt.html", label: "Projekt", page: "project" },
-  { href: "stavba.html", label: "Stavba", page: "stavba" },
-];
+/* =========================================================
+   SPOLEČNÝ LAYOUT ŽELEZÁREN
+   Hlavička, menu a patička jsou zde jen jednou pro všechny
+   stránky: index.html, projekt.html a stavba.html.
+========================================================= */
 
-function renderHeader(activePage) {
-  const navLinks = NAV_ITEMS.map(
-    item => `<a${item.page === activePage ? ' class="active"' : ""} href="${item.href}">${item.label}</a>`
-  ).join("\n        ");
+function getCurrentPage() {
+  const file = window.location.pathname.split("/").pop();
+  return file || "index.html";
+}
 
-  return `
+function renderZelezarnyLayout() {
+  const currentPage = getCurrentPage();
+  const headerMount = document.getElementById("siteHeaderMount");
+  const footerMount = document.getElementById("siteFooterMount");
+
+  const menuItems = [
+    { href: "index.html", label: "Úvod" },
+    { href: "projekt.html", label: "Projekt" },
+    { href: "stavba.html", label: "Stavba" }
+  ];
+
+  if (headerMount) {
+    const links = menuItems.map(item => {
+      const active = currentPage === item.href;
+      return `<a${active ? ' class="active" aria-current="page"' : ''} href="${item.href}">${item.label}</a>`;
+    }).join("\n      ");
+
+    headerMount.outerHTML = `
+  <header class="site-header" id="siteHeader">
     <a class="brand" href="index.html" aria-label="Železárny – úvod">
       <span class="brand-mark"></span>
       <span>ŽELEZÁRNY</span>
     </a>
 
-    <button class="menu-toggle" id="menuToggle" aria-label="Otevřít menu" aria-expanded="false">
+    <button class="menu-toggle" id="menuToggle" aria-label="Otevřít menu" aria-expanded="false" aria-controls="mainNav">
       <span></span><span></span>
     </button>
 
     <nav class="main-nav" id="mainNav" aria-label="Hlavní navigace">
-        ${navLinks}
+      ${links}
     </nav>
-  `;
-}
+  </header>`;
+  }
 
-function renderFooter() {
-  return `
+  if (footerMount) {
+    footerMount.outerHTML = `
+  <footer class="site-footer">
     <div class="container footer-grid">
       <div>
-        <div class="brand footer-brand"><span class="brand-mark"></span><span>ŽELEZÁRNY</span></div>
+        <div class="brand footer-brand">
+          <span class="brand-mark"></span>
+          <span>ŽELEZÁRNY</span>
+        </div>
         <p>Digitální prezentace modulového kolejiště Železáren.</p>
       </div>
-      <p class="copyright">© <span data-current-year></span> N kolejiště. Všechna práva vyhrazena.</p>
+      <p class="copyright">© 2026 N kolejiště. Všechna práva vyhrazena.</p>
     </div>
-  `;
+  </footer>`;
+  }
 }
 
+
 /* =========================================================
-   LAYOUT ↑
-   ---------------------------------------------------------
-   KLASICKÝ JS / CHOVÁNÍ STRÁNKY ↓
+   KLASICKÝ JS / ANIMACE A INTERAKTIVITA ŽELEZÁREN
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const activePage = document.body.dataset.page;
-
-  const headerRoot = document.getElementById("siteHeader");
-  if (headerRoot) headerRoot.innerHTML = renderHeader(activePage);
-
-  const footerRoot = document.getElementById("siteFooter");
-  if (footerRoot) footerRoot.innerHTML = renderFooter();
+  renderZelezarnyLayout();
 
   const header = document.getElementById("siteHeader");
   const menuToggle = document.getElementById("menuToggle");
   const mainNav = document.getElementById("mainNav");
 
+  // Změna vzhledu hlavičky po odscrollování
   const updateHeader = () => {
     header?.classList.toggle("scrolled", window.scrollY > 24);
   };
@@ -63,61 +80,68 @@ document.addEventListener("DOMContentLoaded", () => {
   updateHeader();
   window.addEventListener("scroll", updateHeader, { passive: true });
 
+  // Mobilní menu
+  const closeMenu = () => {
+    mainNav?.classList.remove("open");
+    menuToggle?.classList.remove("active");
+    menuToggle?.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("menu-open");
+  };
+
   menuToggle?.addEventListener("click", () => {
-    const open = mainNav.classList.toggle("open");
+    const open = mainNav?.classList.toggle("open") ?? false;
     menuToggle.classList.toggle("active", open);
     menuToggle.setAttribute("aria-expanded", String(open));
     document.body.classList.toggle("menu-open", open);
   });
 
-  mainNav?.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      mainNav.classList.remove("open");
-      menuToggle?.classList.remove("active");
-      menuToggle?.setAttribute("aria-expanded", "false");
-      document.body.classList.remove("menu-open");
-    });
+  mainNav?.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+  window.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeMenu();
   });
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
+  // Animace prvků při scrollování
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-  document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
+    document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
+  } else {
+    document.querySelectorAll(".reveal").forEach(element => element.classList.add("visible"));
+  }
 
-  document.querySelectorAll("[data-current-year]").forEach(el => {
-    el.textContent = new Date().getFullYear();
-  });
-
-  // Zvětšování fotek (Lightbox)
+  // Zvětšování fotek (lightbox)
   const lightboxModal = document.getElementById("lightboxModal");
   const lightboxImg = document.getElementById("lightboxImg");
   const closeBtn = document.querySelector(".lightbox-close");
 
   if (lightboxModal && lightboxImg) {
-    // Najde všechny fotky v kapitolách a přidá jim funkci po kliknutí
     document.querySelectorAll(".chapter-media img").forEach(img => {
       img.addEventListener("click", () => {
         lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || "Detailní fotka";
         lightboxModal.classList.add("active");
       });
     });
 
-    // Zavření po kliknutí na křížek
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => {
-        lightboxModal.classList.remove("active");
-      });
-    }
+    closeBtn?.addEventListener("click", () => {
+      lightboxModal.classList.remove("active");
+    });
 
-    // Zavření po kliknutí kamkoliv do černého pozadí
-    lightboxModal.addEventListener("click", (e) => {
-      if (e.target === lightboxModal) {
+    lightboxModal.addEventListener("click", event => {
+      if (event.target === lightboxModal) {
+        lightboxModal.classList.remove("active");
+      }
+    });
+
+    window.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
         lightboxModal.classList.remove("active");
       }
     });

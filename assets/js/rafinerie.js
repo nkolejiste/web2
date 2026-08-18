@@ -1,7 +1,16 @@
-/** Hlavička a patička samostatné části Rafinerie. */
-function renderHeader(root) {
-  return `
-    <a class="brand" href="${root}rafinerie/" aria-label="Rafinerie – úvodní stránka">
+/* =========================================================
+   SPOLEČNÝ LAYOUT RAFINERIE
+   Hlavička/menu jsou připravené společně pro budoucí stránky.
+   Odkaz „Hlavní web ↗“ zůstává přímo v HTML patičce.
+========================================================= */
+
+function renderRafinerieHeader() {
+  const headerMount = document.getElementById("siteHeaderMount");
+  if (!headerMount) return;
+
+  headerMount.outerHTML = `
+  <header class="site-header" id="siteHeader">
+    <a class="brand" href="index.html" aria-label="Rafinerie – úvodní stránka">
       <span class="brand-mark"></span>
       <span>RAFINERIE</span>
     </a>
@@ -11,58 +20,38 @@ function renderHeader(root) {
     </button>
 
     <nav class="main-nav" id="mainNav" aria-label="Navigace areálu">
-      <a class="active" aria-current="page" href="${root}rafinerie/">Rafinerie</a>
+      <a class="active" aria-current="page" href="index.html">Rafinerie</a>
     </nav>
-  `;
+  </header>`;
 }
 
-function renderFooter() {
-  return `
-    <div class="container footer-grid">
-      <div>
-        <div class="brand footer-brand">
-          <span class="brand-mark"></span>
-          <span>RAFINERIE</span>
-        </div>
-        <p>Samostatný průmyslový modul modelového kolejiště v měřítku N 1:160.</p>
-      </div>
-
-      <div class="footer-nav">
-        <a href="https://n-kolejiste.cz/">Hlavní web ↗</a>
-      </div>
-
-      <p class="copyright">© <span data-current-year></span> N kolejiště. Všechna práva vyhrazena.</p>
-    </div>
-  `;
-}
 
 /* =========================================================
-   LAYOUT ↑
-   ---------------------------------------------------------
-   KLASICKÝ JS / CHOVÁNÍ STRÁNKY ↓
+   KLASICKÝ JS / ANIMACE A INTERAKTIVITA RAFINERIE
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const root = document.body.dataset.root || "../";
-  const headerRoot = document.getElementById("siteHeader");
-  const footerRoot = document.getElementById("siteFooter");
+  renderRafinerieHeader();
 
-  if (headerRoot) headerRoot.innerHTML = renderHeader(root);
-  if (footerRoot) footerRoot.innerHTML = renderFooter();
-
+  const header = document.getElementById("siteHeader");
   const menuToggle = document.getElementById("menuToggle");
   const mainNav = document.getElementById("mainNav");
 
-  const updateHeader = () => headerRoot?.classList.toggle("scrolled", window.scrollY > 24);
+  // Změna vzhledu hlavičky po odscrollování
+  const updateHeader = () => {
+    header?.classList.toggle("scrolled", window.scrollY > 24);
+  };
+
+  updateHeader();
+  window.addEventListener("scroll", updateHeader, { passive: true });
+
+  // Mobilní menu
   const closeMenu = () => {
     mainNav?.classList.remove("open");
     menuToggle?.classList.remove("active");
     menuToggle?.setAttribute("aria-expanded", "false");
     document.body.classList.remove("menu-open");
   };
-
-  updateHeader();
-  window.addEventListener("scroll", updateHeader, { passive: true });
 
   menuToggle?.addEventListener("click", () => {
     const open = mainNav?.classList.toggle("open") ?? false;
@@ -72,8 +61,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   mainNav?.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
-  window.addEventListener("keydown", event => { if (event.key === "Escape") closeMenu(); });
+  window.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeMenu();
+  });
 
+  // Animace prvků při scrollování
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -83,12 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }, { threshold: 0.12 });
+
     document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
   } else {
     document.querySelectorAll(".reveal").forEach(element => element.classList.add("visible"));
   }
-
-  document.querySelectorAll("[data-current-year]").forEach(element => {
-    element.textContent = new Date().getFullYear();
-  });
 });
