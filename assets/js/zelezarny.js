@@ -97,29 +97,33 @@ function initZelezarnyInteractions() {
   const statCircles = statsSection ? [...statsSection.querySelectorAll(".stat-circle")] : [];
 
   if (statsSection && statCircles.length) {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    statsSection.classList.add("stats-animate");
 
-    if (reduceMotion || !("IntersectionObserver" in window)) {
-      statCircles.forEach(circle => circle.classList.add("is-visible"));
+    const revealStats = () => {
+      statCircles.forEach((circle, index) => {
+        window.setTimeout(() => circle.classList.add("is-visible"), index * 850);
+      });
+    };
+
+    if (!("IntersectionObserver" in window)) {
+      window.setTimeout(revealStats, 250);
     } else {
-      statsSection.classList.add("stats-animate");
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const statsObserver = new IntersectionObserver(
+            entries => {
+              entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                revealStats();
+                statsObserver.unobserve(statsSection);
+              });
+            },
+            { threshold: 0.18, rootMargin: "0px 0px -10% 0px" }
+          );
 
-      const statsObserver = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-
-            statCircles.forEach((circle, index) => {
-              window.setTimeout(() => circle.classList.add("is-visible"), index * 700);
-            });
-
-            statsObserver.unobserve(statsSection);
-          });
-        },
-        { threshold: 0.22, rootMargin: "0px 0px -8% 0px" }
-      );
-
-      statsObserver.observe(statsSection);
+          statsObserver.observe(statsSection);
+        });
+      });
     }
   }
 
