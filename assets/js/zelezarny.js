@@ -100,9 +100,7 @@ function initZelezarnyInteractions() {
     statsSection.classList.add("stats-animate");
 
     const revealStats = () => {
-      statCircles.forEach((circle, index) => {
-        window.setTimeout(() => circle.classList.add("is-visible"), index * 360);
-      });
+      statCircles.forEach(circle => circle.classList.add("is-visible"));
     };
 
     if (!("IntersectionObserver" in window)) {
