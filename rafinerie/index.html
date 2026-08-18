@@ -9,10 +9,10 @@
 
   <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/css/rafinerie.css">
-  <script type="module" src="../assets/js/rafinerie.js"></script>
+  <script src="../assets/js/rafinerie.js" defer></script>
 </head>
-<body>
-  <div id="siteHeaderMount"></div>
+<body data-page="rafinerie-home">
+  <header class="site-header" id="siteHeader"></header>
 
   <main>
     <section class="page-hero">
@@ -48,20 +48,22 @@
     </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" id="siteFooter">
     <div class="container footer-grid">
       <div>
         <div class="brand footer-brand">
           <span class="brand-mark"></span>
           <span>RAFINERIE</span>
         </div>
+        <!-- EDITACE: popis v patičce -->
         <p>Samostatný průmyslový modul modelového kolejiště v měřítku N 1:160.</p>
       </div>
-
       <div class="footer-nav">
+        <!-- EDITACE: odkaz zpět na hlavní web -->
         <a href="https://nkolejiste.github.io/web/">Hlavní web ↗</a>
       </div>
 
+      <!-- EDITACE: copyright v patičce -->
       <p class="copyright">© 2026 N kolejiště. Všechna práva vyhrazena.</p>
     </div>
   </footer>
