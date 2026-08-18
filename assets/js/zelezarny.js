@@ -101,7 +101,7 @@ function initZelezarnyInteractions() {
 
     const revealStats = () => {
       statCircles.forEach((circle, index) => {
-        window.setTimeout(() => circle.classList.add("is-visible"), index * 850);
+        window.setTimeout(() => circle.classList.add("is-visible"), index * 360);
       });
     };
 
